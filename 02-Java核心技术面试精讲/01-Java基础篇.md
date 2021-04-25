@@ -50,3 +50,54 @@
 * **弱引用** `Weak Reference`并不能使对象豁免垃圾收集,仅仅是提供一种访问在弱引用状态下对象的途径.
 * **虚引用**
 
+
+
+## String,StirngBuffer,StringBuilder有什么区别
+
+> 理解Java的字符串,String,StirngBuffer,StringBuilder有什么区别
+
+
+
+### 知识扩展
+
+* 字符串设计和实现考量
+
+为了实现修改字序列的目的,StringBuffer和StringBuilder底层都是利用可修改的数组(char,JDK9以后是byte).两者都集成了`AbstractStringBuilder`,里面包含了基本操作,区别仅在于最终的方法是否加了`synchronized`.
+
+数组大小目前的实现是 ,构建时初始化字符串长度加16.(如果没有录入初始字符串,初始长度就是16).如果能确定拼接的字符串长度,可以指定合适的大小,避免多次扩容开销.
+
+* 字符串缓存
+
+jdk6提供的`intern()`方法,目的是提示JVM把相应字符串缓存起来,以备重复使用.
+
+```
+一般在使用jdk6时,并不推荐大量使用intern,因为被缓存的字符串放到了永久代(perm space).这个空间是有限的,也基本不会被FullGC之外的垃圾收集器手机,所以使用不当,会造成OOM.
+在后续的版本中,这个缓存被放到了堆中.在Jdk8中被metaspacec(元数据区)替代;而且默认缓存大小也在不断的扩大中,从最初的1009,到jdk7u40以后被修改为60013.可以通过 jdk的参数 -XX:+PrintStringTableStatistics 直接打印具体数字.也可以使用 -XX:StringTableSize=N 手动跳整大小.
+```
+
+
+
+## 动态代理是基于什么原理
+
+> 谈谈Java反射机制,动态代理是基于什么原理
+
+
+
+## int 和Integer 有什么区别
+
+> int 和  Integer有什么区别,谈谈Integer的值缓存范围
+
+
+
+## 对比Vector ArrayList LinkedList 有何区别
+
+> 对比Vector ArrayList LinkedList 有何区别
+
+推荐书籍 
+
+《算法导论》，《编程珠玑》
+
+
+
+## 对比 Hashtable HashMap TreeMap 有什么不同
+
